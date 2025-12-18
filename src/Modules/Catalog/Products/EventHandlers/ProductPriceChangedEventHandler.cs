@@ -7,7 +7,7 @@ public class ProductPriceChangedEventHandler(ILogger<ProductPriceChangedEventHan
 {
     public Task Handle(ProductPriceChangedEvent notification, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Doman event handeled: {DomainEvent}", notification.GetType().Name);
+        logger.LogInformation("Domain event handled: {DomainEvent}", notification.GetType().Name);
         return Task.CompletedTask;
     }
 }

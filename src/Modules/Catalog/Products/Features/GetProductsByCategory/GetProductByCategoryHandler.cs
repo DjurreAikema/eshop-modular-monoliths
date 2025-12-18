@@ -9,11 +9,11 @@ public record GetProductsByCategoryQuery(string Category) : IQuery<GetProductsBy
 
 public record GetProductsByCategoryResult(IEnumerable<ProductDto> Products);
 
-public class GetProductsByCategoryHandler(CatalogDbContext dbCOntext) : IQueryHandler<GetProductsByCategoryQuery, GetProductsByCategoryResult>
+public class GetProductsByCategoryHandler(CatalogDbContext dbContext) : IQueryHandler<GetProductsByCategoryQuery, GetProductsByCategoryResult>
 {
     public async Task<GetProductsByCategoryResult> Handle(GetProductsByCategoryQuery query, CancellationToken cancellationToken)
     {
-        var products = await dbCOntext.Products
+        var products = await dbContext.Products
             .AsNoTracking()
             .Where(p => p.Categories.Contains(query.Category))
             .OrderBy(p => p.Name)

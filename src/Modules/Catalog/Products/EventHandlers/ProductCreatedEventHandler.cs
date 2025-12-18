@@ -7,7 +7,7 @@ public class ProductCreatedEventHandler(ILogger<ProductCreatedEventHandler> logg
 {
     public Task Handle(ProductCreatedEvent notification, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Doman event handeled: {DomainEvent}", notification.GetType().Name);
+        logger.LogInformation("Domain event handled: {DomainEvent}", notification.GetType().Name);
         return Task.CompletedTask;
     }
 }
