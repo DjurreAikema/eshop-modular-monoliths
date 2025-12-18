@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Catalog.Products.Features.DeleteProduct;
 
+// --- Records
 public record DeleteProductResponse(bool IsSuccess);
 
+// --- Endpoint
 public class DeleteProductEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)

@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Catalog.Products.Features.UpdateProduct;
 
+// --- Records
 public record UpdateProductRequest(ProductDto Product);
 
 public record UpdateProductResponse(bool IsSuccess);
 
+// --- Endpoint
 public class UpdateProductEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)

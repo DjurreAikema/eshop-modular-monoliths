@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Catalog.Products.Features.GetProductById;
 
+// --- Records
 public record GetProductByIdResponse(ProductDto Product);
 
+// --- Endpoint
 public class GetProductByIdEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)

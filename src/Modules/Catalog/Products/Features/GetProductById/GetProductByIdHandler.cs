@@ -1,14 +1,17 @@
 ﻿using Catalog.Products.Dtos;
+using Catalog.Products.Exceptions;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Shared.CQRS;
 
 namespace Catalog.Products.Features.GetProductById;
 
+// --- Records
 public record GetProductByIdQuery(Guid Id) : IQuery<GetProductByIdResult>;
 
 public record GetProductByIdResult(ProductDto Product);
 
+// --- Handler
 public class GetProductByIdHandler(CatalogDbContext dbContext) : IQueryHandler<GetProductByIdQuery, GetProductByIdResult>
 {
     public async Task<GetProductByIdResult> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
@@ -19,7 +22,7 @@ public class GetProductByIdHandler(CatalogDbContext dbContext) : IQueryHandler<G
 
         if (product is null)
         {
-            throw new Exception($"Product not found: {query.Id}");
+            throw new ProductNotFoundException(query.Id);
         }
 
         var productDto = product.Adapt<ProductDto>();

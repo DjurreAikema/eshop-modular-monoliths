@@ -5,10 +5,12 @@ using Shared.CQRS;
 
 namespace Catalog.Products.Features.GetProductsByCategory;
 
+// --- Records
 public record GetProductsByCategoryQuery(string Category) : IQuery<GetProductsByCategoryResult>;
 
 public record GetProductsByCategoryResult(IEnumerable<ProductDto> Products);
 
+// --- Handler
 public class GetProductsByCategoryHandler(CatalogDbContext dbContext) : IQueryHandler<GetProductsByCategoryQuery, GetProductsByCategoryResult>
 {
     public async Task<GetProductsByCategoryResult> Handle(GetProductsByCategoryQuery query, CancellationToken cancellationToken)
