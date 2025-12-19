@@ -17,8 +17,6 @@ public static class CatalogModule
 {
     public static IServiceCollection AddCatalogModule(this IServiceCollection services, IConfiguration configuration)
     {
-        // Add services to the containers
-
         // Api endpoint services
 
         // Application use case services
@@ -30,7 +28,7 @@ public static class CatalogModule
         });
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-        // Data - Infrastructure services
+        // Data/Infrastructure services
         var connectionString = configuration.GetConnectionString("Database");
 
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
@@ -50,13 +48,11 @@ public static class CatalogModule
 
     public static IApplicationBuilder UseCatalogModule(this IApplicationBuilder app)
     {
-        // Configure the HTTP request pipeline
+        // Api endpoint services
 
-        // 1. Use Api endpoint services
+        // Application use case services
 
-        // 2. Use application use case services
-
-        // 3. Use data - infrastructure services
+        // Data/Infrastructure services
         app.UseMigration<CatalogDbContext>();
 
         return app;
