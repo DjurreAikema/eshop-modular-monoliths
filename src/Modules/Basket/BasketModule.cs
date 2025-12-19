@@ -1,4 +1,5 @@
 ﻿using Basket.Data;
+using Basket.Data.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -16,6 +17,8 @@ public static class BasketModule
         // Api endpoint services
 
         // Application use case services
+        services.AddScoped<IBasketRepository, BasketRepository>();
+        services.Decorate<IBasketRepository, CachedBasketRepository>();
 
         // Data - Infrastructure services
         var connectionString = configuration.GetConnectionString("Database");
@@ -28,8 +31,6 @@ public static class BasketModule
             options.AddInterceptors(serviceProvider.GetServices<ISaveChangesInterceptor>());
             options.UseNpgsql(connectionString);
         });
-
-        // services.AddScoped<IDataSeeder, BasketDataSeeder>();
 
 
         return services;

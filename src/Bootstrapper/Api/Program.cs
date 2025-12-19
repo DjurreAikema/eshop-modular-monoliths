@@ -1,7 +1,5 @@
 using Carter;
-using FluentValidation;
 using Serilog;
-using Shared.Behaviors;
 using Shared.Exceptions.Handlers;
 using Shared.Extensions;
 
@@ -24,6 +22,10 @@ builder.Services.AddMediatRWithAssemblies(
     catalogAssembly
 );
 
+builder.Services.AddStackExchangeRedisCache(options =>
+    options.Configuration = builder.Configuration.GetConnectionString("Redis")
+);
+
 // Modules services
 builder.Services
     .AddBasketModule(builder.Configuration)
@@ -35,7 +37,7 @@ builder.Services
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
+// --- Configure the HTTP request pipeline
 app.MapCarter();
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler(_ => { });

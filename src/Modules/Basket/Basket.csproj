@@ -10,9 +10,4 @@
       <ProjectReference Include="..\..\Shared\Shared.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Basket\EventHandlers\" />
-      <Folder Include="Data\Seed\" />
-    </ItemGroup>
-
 </Project>
