@@ -2,6 +2,7 @@ using Carter;
 using Serilog;
 using Shared.Exceptions.Handlers;
 using Shared.Extensions;
+using Shared.Messaging.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,12 @@ var basketAssembly = typeof(BasketModule).Assembly;
 var catalogAssembly = typeof(CatalogModule).Assembly;
 
 builder.Services.AddCarterWithAssemblies(
+    basketAssembly,
+    catalogAssembly
+);
+
+builder.Services.AddMassTransitWithAssemblies(
+    builder.Configuration,
     basketAssembly,
     catalogAssembly
 );

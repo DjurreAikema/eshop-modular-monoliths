@@ -15,7 +15,7 @@ public class ShoppingCartItem : Entity<Guid>
     public decimal Price { get; private set; } = 0;
     public string ProductName { get; private set; } = null!;
 
-    // --- Methods
+    // --- Constructors
     internal ShoppingCartItem(Guid shoppingCartId, Guid productId, int quantity, string color, decimal price, string productName)
     {
         ShoppingCartId = shoppingCartId;
@@ -36,5 +36,13 @@ public class ShoppingCartItem : Entity<Guid>
         Color = color;
         Price = price;
         ProductName = productName;
+    }
+
+    // --- Methods
+    public void UpdatePrice(decimal newPrice)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(newPrice);
+
+        Price = newPrice;
     }
 }
