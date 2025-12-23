@@ -1,7 +1,7 @@
-﻿using Catalog.Products.Dtos;
+﻿using Catalog.Contracts.Products.Dtos;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
-using Shared.CQRS;
+using Shared.Contracts.CQRS;
 using Shared.Pagination;
 
 namespace Catalog.Products.Features.GetProducts;

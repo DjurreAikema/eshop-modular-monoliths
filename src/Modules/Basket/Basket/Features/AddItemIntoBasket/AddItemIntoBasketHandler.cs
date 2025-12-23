@@ -1,7 +1,9 @@
 ﻿using Basket.Basket.Dtos;
 using Basket.Data.Repository;
+using Catalog.Contracts.Products.Features.GetProductById;
 using FluentValidation;
-using Shared.CQRS;
+using MediatR;
+using Shared.Contracts.CQRS;
 
 namespace Basket.Basket.Features.AddItemIntoBasket;
 
@@ -22,18 +24,23 @@ public class AddItemIntoBasketCommandValidator : AbstractValidator<AddItemIntoBa
 }
 
 // --- Handler
-public class AddItemIntoBasketHandler(IBasketRepository repository) : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
+public class AddItemIntoBasketHandler(
+    IBasketRepository repository,
+    ISender sender
+) : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
 {
     public async Task<AddItemIntoBasketResult> Handle(AddItemIntoBasketCommand command, CancellationToken cancellationToken)
     {
         var shoppingCart = await repository.GetBasket(command.UserName, false, cancellationToken);
 
+        var result = await sender.Send(new GetProductByIdQuery(command.ShoppingCartItem.ProductId), cancellationToken);
+
         shoppingCart.AddItem(
             command.ShoppingCartItem.ProductId,
             command.ShoppingCartItem.Quantity,
             command.ShoppingCartItem.Color,
-            command.ShoppingCartItem.Price,
-            command.ShoppingCartItem.ProductName
+            result.Product.Price,
+            result.Product.Name
         );
 
         await repository.SaveChangesAsync(command.UserName, cancellationToken);
