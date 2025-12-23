@@ -1,4 +1,5 @@
 using Carter;
+using Keycloak.AuthServices.Authentication;
 using Serilog;
 using Shared.Exceptions.Handlers;
 using Shared.Extensions;
@@ -9,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, config) => config.ReadFrom.Configuration(context.Configuration));
 
 // --- Add services to the container
-// Common services: Carter, MediatR, FluentValidation
+// Common services: Carter, MassTransit, MediatR, Keycloak
 var basketAssembly = typeof(BasketModule).Assembly;
 var catalogAssembly = typeof(CatalogModule).Assembly;
 
@@ -17,6 +18,9 @@ builder.Services.AddCarterWithAssemblies(
     basketAssembly,
     catalogAssembly
 );
+
+builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
+builder.Services.AddAuthorization();
 
 builder.Services.AddMassTransitWithAssemblies(
     builder.Configuration,
@@ -48,6 +52,8 @@ var app = builder.Build();
 app.MapCarter();
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler(_ => { });
+app.UseAuthentication();
+app.UseAuthorization();
 
 app
     .UseBasketModule()

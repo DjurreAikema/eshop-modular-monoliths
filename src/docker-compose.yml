@@ -11,5 +11,8 @@ services:
   message-bus:
     image: rabbitmq:management
 
+  identity:
+    image: keycloak/keycloak
+
 volumes:
   postgres_eshopdb:

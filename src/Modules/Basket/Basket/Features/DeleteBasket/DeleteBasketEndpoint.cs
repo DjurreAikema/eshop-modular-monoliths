@@ -28,6 +28,7 @@ public class DeleteBasketEndpoint : ICarterModule
             .ProducesProblem(StatusCodes.Status404NotFound)
             .WithName("DeleteBasket")
             .WithSummary("Delete Basket")
-            .WithDescription("Delete Basket");
+            .WithDescription("Delete Basket")
+            .RequireAuthorization();
     }
 }
