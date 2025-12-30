@@ -13,10 +13,12 @@ builder.Host.UseSerilog((context, config) => config.ReadFrom.Configuration(conte
 // Common services: Carter, MassTransit, MediatR, Keycloak
 var basketAssembly = typeof(BasketModule).Assembly;
 var catalogAssembly = typeof(CatalogModule).Assembly;
+var orderingAssembly = typeof(OrderingModule).Assembly;
 
 builder.Services.AddCarterWithAssemblies(
     basketAssembly,
-    catalogAssembly
+    catalogAssembly,
+    orderingAssembly
 );
 
 builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
@@ -25,12 +27,14 @@ builder.Services.AddAuthorization();
 builder.Services.AddMassTransitWithAssemblies(
     builder.Configuration,
     basketAssembly,
-    catalogAssembly
+    catalogAssembly,
+    orderingAssembly
 );
 
 builder.Services.AddMediatRWithAssemblies(
     basketAssembly,
-    catalogAssembly
+    catalogAssembly,
+    orderingAssembly
 );
 
 builder.Services.AddStackExchangeRedisCache(options =>
