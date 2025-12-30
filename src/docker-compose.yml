@@ -14,5 +14,11 @@ services:
   identity:
     image: keycloak/keycloak
 
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: Bootstrapper/Api/Dockerfile
+
 volumes:
   postgres_eshopdb:
