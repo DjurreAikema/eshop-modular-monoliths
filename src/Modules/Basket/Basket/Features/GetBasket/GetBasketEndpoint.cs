@@ -29,7 +29,7 @@ public class GetBasketEndpoint : ICarterModule
             .ProducesProblem(StatusCodes.Status404NotFound)
             .WithName("GetBasket")
             .WithSummary("Get Basket")
-            .WithDescription("Get Basket")
-            .RequireAuthorization();
+            .WithDescription("Get Basket");
+        // .RequireAuthorization();
     }
 }
